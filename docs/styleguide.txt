@@ -1,0 +1,18 @@
+colors:
+  *
+  *
+  *
+  *
+  *
+
+font families:
+  *
+  *
+  *
+
+font sizes:
+  *
+  *
+  *
+  *
+  *
