@@ -1,0 +1,25 @@
+body {
+  background-color: $lightest-gray;
+  font-family: $body;
+}
+
+h1 {
+  font-size: 60px;
+  font-family: $title;
+  color: $raspberry;
+  text-align: center;
+}
+
+section {
+  background-color: white;
+  margin: 0 auto;
+  height: 100%;
+  width: 70%;
+}
+
+button {
+  background-color: $muted-raspberry;
+  padding: 8px;
+  color: white;
+  text-transform: uppercase;
+}

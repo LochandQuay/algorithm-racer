@@ -1,0 +1,13 @@
+button {
+  border: 3px solid transparent;
+  box-sizing: border-box;
+  transition: 0.1s all linear;
+  &:hover {
+    background-color: $raspberry;
+  }
+  &:active {
+    border: 3px solid $raspberry;
+    background-color: white;
+    color: $raspberry;
+  }
+}
