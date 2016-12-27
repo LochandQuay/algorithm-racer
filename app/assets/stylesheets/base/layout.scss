@@ -1,5 +1,5 @@
 body {
-  background-color: $lightest-gray;
+  background-color: $blue;
   font-family: $body;
 }
 
@@ -10,11 +10,20 @@ h1 {
   text-align: center;
 }
 
+h2 {
+  font-size: 32px;
+  text-align: center;
+  font-family: $title;
+  color: $dark-raspberry;
+}
+
 section {
   background-color: white;
   margin: 0 auto;
   height: 100%;
-  width: 70%;
+  width: 60%;
+  padding: 10px 30px;
+  box-shadow: 0 0 20px black;
 }
 
 button {
@@ -22,4 +31,14 @@ button {
   padding: 8px;
   color: white;
   text-transform: uppercase;
+  float: right;
+  margin: 0 5px;
+}
+
+nav {
+
+}
+
+.group {
+  position: relative;
 }
