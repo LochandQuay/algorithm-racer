@@ -1,0 +1,49 @@
+.leaderboard-list {
+  list-style: decimal;
+  list-style-position: inside;
+  color: $light-gray;
+  padding-left: 0;
+
+  h6 {
+    font-size: 16px;
+  }
+
+  li {
+    padding: 10px;
+    height: 20px;
+    font-size: 16px;
+    position: relative;
+    margin: 4px;
+    border: 1px solid $light-gray;
+    color: $dark-raspberry;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &:hover {
+      color: $raspberry;
+      text-decoration: underline;
+      cursor: pointer;
+
+      .leaderboard-item-hover {
+        display: block;
+      }
+    }
+  }
+}
+
+.leaderboard-item-hover {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  display: none;
+  position: absolute;
+  background: $blue;
+  border: 1px solid $dark-blue;
+  z-index: 2;
+  padding: 10px;
+  top: 20px;
+  left: 110px;
+  border-radius: 0 16px 16px 16px;
+  box-shadow: 0 1px 3px $gray;
+}
