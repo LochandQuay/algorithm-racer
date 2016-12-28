@@ -8,6 +8,7 @@
 
   h6 {
     font-size: 16px;
+    transition: all 0.2s linear;
   }
 
   li {
@@ -25,29 +26,37 @@
 
     &:hover {
       color: $raspberry;
-      text-decoration: underline;
       cursor: pointer;
+      font-size: 20px;
+
+      h6 {
+        font-size: 20px;
+      }
 
       .leaderboard-item-hover {
         opacity: 1;
+        width: 200px;
       }
     }
   }
 }
 
 .leaderboard-item-hover {
-  transition: opacity 0.2s;
+  transition: all 0.2s linear;
   text-decoration: none;
   display: block;
   color: white;
   opacity: 0;
+  width: 0px;
+  height: auto;
   font-size: 16px;
+  white-space: nowrap;
   position: absolute;
   background: $blue;
   z-index: 2;
   padding: 10px;
   top: 20px;
-  left: 110px;
+  left: 200px;
   border-radius: 0 16px 16px 16px;
   box-shadow: 0 1px 3px $gray;
 }
