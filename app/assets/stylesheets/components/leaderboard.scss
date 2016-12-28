@@ -3,6 +3,8 @@
   list-style-position: inside;
   color: $light-gray;
   padding-left: 0;
+  transition: 0.1s all linear;
+
 
   h6 {
     font-size: 16px;
@@ -19,6 +21,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    transition: all 0.2s linear;
 
     &:hover {
       color: $raspberry;
@@ -26,17 +29,19 @@
       cursor: pointer;
 
       .leaderboard-item-hover {
-        display: block;
+        opacity: 1;
       }
     }
   }
 }
 
 .leaderboard-item-hover {
-  color: white;
+  transition: opacity 0.2s;
   text-decoration: none;
+  display: block;
+  color: white;
+  opacity: 0;
   font-size: 16px;
-  display: none;
   position: absolute;
   background: $blue;
   border: 1px solid $dark-blue;
