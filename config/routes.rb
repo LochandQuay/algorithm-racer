@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources :users, only: [:new, :create, :show]
 
+  resources :algorithms, except: [:edit, :update]
+
   resource :sessions
 
   root to: 'sessions#new'
