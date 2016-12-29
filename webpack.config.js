@@ -1,0 +1,26 @@
+module.exports = {
+  entry: "frontend/entry.jsx",
+  output: {
+      path: "app/assets/javascripts",
+      filename: "bundle.js"
+  },
+
+  devtool: 'source-map',
+
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
+
+  module: {
+    loaders: [
+      {
+        test: [/\.jsx?$/, /\.js?$/],
+        exclude: /(node_modules)/,
+        loader: 'babel',
+        query: {
+          presets: ['es2015', 'react']
+        }
+      }
+    ]
+  }
+};
