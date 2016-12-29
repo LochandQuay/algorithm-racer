@@ -1,9 +1,8 @@
-@mixin button($float-dir) {
+@mixin button {
   background-color: $dark-raspberry;
   padding: 8px;
   color: white;
   text-transform: uppercase;
-  float: $float-dir;
   margin: 0 5px;
   border: 3px solid transparent;
   box-sizing: border-box;
