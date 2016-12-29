@@ -1,4 +1,10 @@
-button {
+@mixin button($float-dir) {
+  background-color: $dark-raspberry;
+  padding: 8px;
+  color: white;
+  text-transform: uppercase;
+  float: $float-dir;
+  margin: 0 5px;
   border: 3px solid transparent;
   box-sizing: border-box;
   transition: 0.1s all linear;

@@ -27,12 +27,11 @@ section {
 }
 
 button {
-  background-color: $muted-raspberry;
-  padding: 8px;
-  color: white;
-  text-transform: uppercase;
-  float: right;
-  margin: 0 5px;
+  @include button(right);
+}
+
+input[type="submit"] {
+  @include button(left);
 }
 
 .group {
