@@ -1,5 +1,7 @@
 class AlgorithmsController < ApplicationController
 
+  LIMIT = 20
+
   def create
     @algorithm = Algorithm.new(algorithm_params)
     @algorithm.user_id = current_user.id
@@ -26,7 +28,15 @@ class AlgorithmsController < ApplicationController
   end
 
   def index
-    @algorithms = Algorithm.all
+    @algorithms = Algorithm.top_algos_by_category(LIMIT)
+  end
+
+  def top_sorting
+    @algorithms = Algorithm.top_algos_by_category(LIMIT, "SORT")
+  end
+
+  def top_searching
+    @algorithms = Algorithm.top_algos_by_category(LIMIT, "ARRAY_SEARCH")
   end
 
   private

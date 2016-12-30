@@ -12,15 +12,22 @@
   </head>
 
   <body>
-    <section class="css-test group">
+    <section class="group">
 
       <nav class="group">
         <h1>algorithmRacer_</h1>
-        <button type="button" name="button">Submit</button>
-        <button type="button" name="button">Login</button>
+        <div>
+          <% if current_user %>
+          <%= link_to current_user.username, user_url(current_user) %>
+          <%= button_to "Log Out", sessions_url(current_user), method: :delete %>
+          <% else %>
+          <%= link_to "Log In", new_sessions_url, class: 'button-link' %>
+          <%= link_to "Sign Up", new_user_url, class: 'button-link' %>
+          <% end %>
+        </div>
       </nav>
 
-      <h2>Sorting Leaderboard</h2>
+      <!-- <h2>Sorting Leaderboard</h2>
       <div class="group leader-nav">
         <h4>Go to:</h4>
         <ul class="leaderboard-dropdown">
@@ -75,7 +82,8 @@
             Golf Score: Par<br>
           </div>
         </li></a>
-      </ol>
+      </ol> -->
+      <%= yield %>
       <br>
       <label for="">Title: <input type="text" name="" value=""></label>
       <label for="" class="select-arrow">Category: <select class="" name="">
@@ -85,15 +93,11 @@
         <option value="Permutations">Permutations</option>
       </select></label>
       <br>
-      <textarea class="code-box"
-      name="name"
-      rows="16"
-      cols="72"
-      placeholder="Insert code here"></textarea>
+      <div id="editor"></div>
       <br>
       <input type="submit" name="" value="Submit Algorithm">
     </section>
 
-    <%= yield %>
+
   </body>
 </html>
