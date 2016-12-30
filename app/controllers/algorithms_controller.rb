@@ -42,6 +42,6 @@ class AlgorithmsController < ApplicationController
   private
 
   def algorithm_params
-    params.require(:algorithm).permit(:title, :body, :category)
+    params.require(:algorithm).permit(:title, :body, :category, :speed, :golf_score, :total_score)
   end
 end
