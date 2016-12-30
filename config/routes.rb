@@ -3,6 +3,10 @@ Rails.application.routes.draw do
 
   resources :algorithms, except: [:edit, :update]
 
+  get '/algorithms/sort', to: 'algorithms#top_sorting', as: 'top_sort'
+
+  get '/algorithms/array_search', to: 'algorithms#top_searching', as: 'top_search'
+
   resource :sessions
 
   root to: 'sessions#new'
