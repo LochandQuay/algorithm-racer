@@ -18,7 +18,7 @@ let App = React.createClass({
 		return {
 			code: defaults.markdown,
 			readOnly: false,
-			mode: 'markdown',
+			mode: 'javascript',
 		};
 	},
 	updateCode (newCode) {
@@ -53,14 +53,6 @@ let App = React.createClass({
 		return (
 			<div>
 				<Codemirror ref="editor" value={this.state.code} onChange={this.updateCode} options={options} interact={this.interact} />
-				<div style={{ marginTop: 10 }}>
-					<select onChange={this.changeMode} value={this.state.mode}>
-						<option value="javascript">JavaScript</option>
-						<option value="ruby">Ruby</option>
-					</select>
-					<button onClick={this.toggleReadOnly}>Toggle read-only mode (currently {this.state.readOnly ? 'on' : 'off'})</button>
-					<button onClick={this.runCode}>Run Code</button>
-				</div>
 			</div>
 		);
 	}
