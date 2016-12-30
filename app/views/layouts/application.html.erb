@@ -18,11 +18,10 @@
         <h1>algorithmRacer_</h1>
         <div>
           <% if current_user %>
-          <%= link_to current_user.username, user_url(current_user) %>
-          <%= button_to "Log Out", sessions_url(current_user), method: :delete %>
+            <%= button_to "Log Out (#{current_user.username})", sessions_url(current_user), method: :delete %>
           <% else %>
-          <%= link_to "Log In", new_sessions_url, class: 'button-link' %>
-          <%= link_to "Sign Up", new_user_url, class: 'button-link' %>
+            <%= link_to "Log In", new_sessions_url, class: 'button-link' %>
+            <%= link_to "Sign Up", new_user_url, class: 'button-link' %>
           <% end %>
         </div>
       </nav>
