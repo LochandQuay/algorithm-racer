@@ -59,43 +59,46 @@ let Editor = React.createClass({
 	handleSubmit (e) {
 		e.preventDefault();
 		this.refs.submit.setAttribute('disabled', 'disabled');
-		this.setSpeed();
-		this.setGolfScore();
-		this.setState({ totalScore: this.state.speed * this.state.golfScore });
-		let data = {
-			algorithm: {
-				title: this.state.title,
-				body: this.state.code,
-				speed: this.state.speed,
-				category: this.state.category,
-				golf_score: this.state.golfScore,
-				total_score: this.state.totalScore
-			}
+		const ajax = () => {
+			let data = {
+				algorithm: {
+					title: this.state.title,
+					body: this.state.code,
+					speed: this.state.speed,
+					category: this.state.category,
+					golf_score: this.state.golfScore,
+					total_score: this.state.totalScore
+				}
+			};
+			APIUtil.createAlgo(data)
+				.then((resp) => this.handleSuccess(resp));
 		};
-		APIUtil.createAlgo(data)
-			.then((resp) => this.handleSuccess(resp));
+		this.setSpeed(ajax);
+
+
 	},
 
 	handleSuccess (resp) {
-
 		this.refs.submit.removeAttribute('disabled');
+	},
 
-
+	submit (ajax) {
+		this.setState({ totalScore: this.state.speed * this.state.golfScore }, ajax);
 	},
 
 	runCode () {
 		safeEval(this.state.code);
 	},
 
-	setSpeed () {
+	setSpeed (ajax) {
 		let start = window.performance.now();
 		this.runCode();
 		let end = window.performance.now();
-		this.setState({ speed: Math.floor(end-start) });
+		this.setState({ speed: Math.floor(end-start) }, this.setGolfScore.bind(this, ajax));
 	},
 
-	setGolfScore () {
-
+	setGolfScore (ajax) {
+		this.setState({ golfScore: 5 }, this.submit.bind(this, ajax));
 	},
 
 	render () {
