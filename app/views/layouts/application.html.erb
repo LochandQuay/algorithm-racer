@@ -83,9 +83,12 @@
           </div>
         </li></a>
       </ol> -->
-      <%= yield %>
+      <% if current_user %>
+        <div id="app"></div>
+      <% else %>
+        <%= yield %>
+      <% end %>
 
-      <div id="app"></div>
     </section>
 
 

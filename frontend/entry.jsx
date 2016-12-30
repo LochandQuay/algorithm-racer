@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Editor from './components/editor';
+import Root from './components/root';
 
 $(() => {
   const app = document.getElementById('app');
-  ReactDOM.render(<Editor />, app);
+  ReactDOM.render(<Root />, app);
 });

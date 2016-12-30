@@ -2,6 +2,7 @@ let React = require('react');
 let ReactDOM = require('react-dom');
 let Codemirror = require('../src/Codemirror');
 let safeEval = require('safe-eval');
+
 let APIUtil = require('../api_util');
 
 require('codemirror/mode/javascript/javascript');
@@ -78,14 +79,8 @@ let Editor = React.createClass({
 	handleSuccess (resp) {
 
 		this.refs.submit.removeAttribute('disabled');
-		this.setState({
-			code: defaults.javascript,
-			title: "",
-			category: 'SORT',
-			speed: 0,
-			golfScore: 0,
-			totalScore: 0,
-		});
+
+
 	},
 
 	runCode () {
@@ -111,6 +106,7 @@ let Editor = React.createClass({
 		};
 		return (
 			<div>
+				<h2>Submit an Algorithm</h2>
 				<label>
 					Title:
 					<input onChange={this.updateTitle}
