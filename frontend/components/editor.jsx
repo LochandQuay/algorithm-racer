@@ -53,6 +53,7 @@ let Editor = React.createClass({
 		return (
 			<div>
 				<Codemirror ref="editor" value={this.state.code} onChange={this.updateCode} options={options} interact={this.interact} />
+				<button onClick={this.runCode.bind(this)}>Submit Algorithm</button>
 			</div>
 		);
 	}
