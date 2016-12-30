@@ -3,6 +3,9 @@ const APIUtil = {
     type: 'POST',
     url: 'http://localhost:3000/algorithms',
     dataType: 'JSON',
-    data: data
+    contentType: 'application/json',
+    data: JSON.stringify(data)
   })
 };
+
+module.exports = APIUtil;

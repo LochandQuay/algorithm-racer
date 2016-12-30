@@ -4,6 +4,6 @@ import ReactDOM from 'react-dom';
 import Editor from './components/editor';
 
 $(() => {
-  const editor = document.getElementById('editor');
-  ReactDOM.render(<Editor />, editor);
+  const app = document.getElementById('app');
+  ReactDOM.render(<Editor />, app);
 });

@@ -55,24 +55,29 @@ let Editor = React.createClass({
 		console.log(cm.getValue());
 	},
 
-	handleSubmit () {
+	handleSubmit (e) {
+		e.preventDefault();
 		this.refs.submit.setAttribute('disabled', 'disabled');
 		this.setSpeed();
 		this.setGolfScore();
-		this.setState({ totalScore: this.speed * this.golfScore });
+		this.setState({ totalScore: this.state.speed * this.state.golfScore });
 		let data = {
-			title: this.title,
-			body: this.code,
-			speed: this.speed,
-			category: this.category,
-			golf_score: this.golfScore,
-			total_score: this.totalScore
+			algorithm: {
+				title: this.state.title,
+				body: this.state.code,
+				speed: this.state.speed,
+				category: this.state.category,
+				golf_score: this.state.golfScore,
+				total_score: this.state.totalScore
+			}
 		};
-		APIUtil.createAlgo(JSON.stringify(data))
+		APIUtil.createAlgo(data)
 			.then((resp) => this.handleSuccess(resp));
 	},
 
 	handleSuccess (resp) {
+
+		this.refs.submit.removeAttribute('disabled');
 		this.setState({
 			code: defaults.javascript,
 			title: "",
@@ -81,7 +86,6 @@ let Editor = React.createClass({
 			golfScore: 0,
 			totalScore: 0,
 		});
-		this.refs.submit.removeAttribute('disabled');
 	},
 
 	runCode () {
@@ -92,7 +96,7 @@ let Editor = React.createClass({
 		let start = window.performance.now();
 		this.runCode();
 		let end = window.performance.now();
-		this.setState({ speed: end-start });
+		this.setState({ speed: Math.floor(end-start) });
 	},
 
 	setGolfScore () {
@@ -109,7 +113,7 @@ let Editor = React.createClass({
 			<div>
 				<label>
 					Title:
-					<input onChange={this.updateTitle.bind(this)}
+					<input onChange={this.updateTitle}
 								 type='text'
 								 value={this.state.title} />
 				</label>
@@ -117,7 +121,7 @@ let Editor = React.createClass({
 				<label className="select-arrow">
 					Category:
 					<select value={this.state.category}
-									onChange={this.updateCategory.bind(this)}>
+									onChange={this.updateCategory}>
 		        <option value="SORT">Sorting</option>
 		        <option value="ARRAY_SEARCH">Array Searching</option>
 	      	</select>
@@ -127,15 +131,16 @@ let Editor = React.createClass({
 
 				<Codemirror ref="editor"
 										value={this.state.code}
-										onChange={this.updateCode.bind(this)}
+										onChange={this.updateCode}
 										options={options}
 										interact={this.interact} />
 
 				<br />
 
-				<button ref="submit" onClick={this.handleSubmit.bind(this)}>
-					Submit Algorithm
-				</button>
+				<input type='submit'
+							 ref="submit"
+							 onClick={this.handleSubmit}
+							 value='Submit Algorithm' />
 			</div>
 		);
 	}

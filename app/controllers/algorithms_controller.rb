@@ -3,13 +3,14 @@ class AlgorithmsController < ApplicationController
   LIMIT = 20
 
   def create
-    @algorithm = Algorithm.new(algorithm_params)
-    @algorithm.user_id = current_user.id
+    @algorithm = current_user.algorithms.build(algorithm_params)
     if @algorithm.save
-      redirect_to algorithm_url(@algorithm)
+      # respond_to do |format|
+      #   format.html { redirect_to request.referrer }
+      #   format.json { render :show }
+      # end
     else
-      flash.now[:errors] = @algorithm.errors.full_messages
-      render :new
+      render json: @algorithm.errors.full_messages
     end
   end
 
