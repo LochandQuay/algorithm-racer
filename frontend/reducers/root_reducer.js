@@ -1,3 +1,10 @@
 import { combineReducers } from 'redux';
-import leaderboard from './leaderboard_reducer';
-import currentUser from './current_user_reducer';
+import leaderboardReducer from './leaderboard_reducer';
+import currentUserReducer from './current_user_reducer';
+
+const rootReducer = combineReducers({
+  leaderboardReducer,
+  currentUserReducer
+});
+
+export default rootReducer;
