@@ -96,13 +96,17 @@ let Editor = React.createClass({
 		let start = window.performance.now();
 		this.runCode();
 		let end = window.performance.now();
+		let difference = end - start;
+		let speedScore = 100-difference;
 		this.setState({
-			speed: Math.floor(end-start)
+			speed: speedScore
 		}, this.setGolfScore.bind(this, ajax));
 	},
 
 	setGolfScore (ajax) {
-		this.setState({ golfScore: 5 }, this.submit.bind(this, ajax));
+		let algoCount = this.state.code.split('').length;
+		let mult = 100-algoCount;
+		this.setState({ golfScore: mult }, this.submit.bind(this, ajax));
 	},
 
 	render () {
