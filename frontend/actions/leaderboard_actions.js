@@ -9,11 +9,11 @@ export const addScore = (username, score) => ({
 });
 
 export const removeScore = (username, score) => ({
-  type: ADD_SCORE,
+  type: REMOVE_SCORE,
   username: username,
   score: score
 });
 
 export const clearBoard = () => ({
-  type: ADD_SCORE,
+  type: CLEAR,
 });
