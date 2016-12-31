@@ -51,7 +51,8 @@ let randomArray = (length, max=1000) => {
 };
 
 let isArrayEqual = (arr1, arr2) => {
-    var i = arr1.length;
+
+    let i = arr1.length;
     if (i !== arr2.length) return false;
     while (i--) {
         if (arr1[i] !== arr2[i]) return false;
@@ -147,7 +148,7 @@ let Editor = React.createClass({
 
 	submit (ajax) {
 		this.setState({
-			totalScore: this.state.speed * this.state.golfScore
+			totalScore: this.state.speed * this.state.golfScore * 100
 		}, ajax);
 	},
 
@@ -166,7 +167,9 @@ let Editor = React.createClass({
 			testFunc = safeEval(this.state.code);
 			args = safeEval(this.state.testArgs);
 			output = testFunc(args);
+			//testing purposes
 			console.log(this.validateSort(testFunc));
+			this.testSpeed();
 		}
 		catch (e) {
 			output = "Error! " + e.message;
@@ -179,14 +182,33 @@ let Editor = React.createClass({
 	setSpeed (ajax) {
 		let start = window.performance.now();
 		for (var i = 0; i < 100; i++) {
-			this.runSortTests();
+			if (this.state.category === "SORT") {
+				this.runSortTests();
+			}else if (this.state.category === "ARRAY_SEARCH") {
+				this.runSearchTests();
+			}
 		}
 		let end = window.performance.now();
 		let difference = end - start;
-		let speedScore = 100-difference;
+		let speedScore = (100-difference)/100;
 		this.setState({
 			speed: speedScore
 		}, this.setGolfScore.bind(this, ajax));
+	},
+
+	//Purely for testing at the moment, might not need in production code
+	testSpeed () {
+		let start = window.performance.now();
+		for (var i = 0; i < 100; i++) {
+			if (this.state.category === "SORT") {
+				this.runSortTests();
+			}else if (this.state.category === "ARRAY_SEARCH") {
+				this.runSearchTests();
+			}
+		}
+		let end = window.performance.now();
+		let difference = end - start;
+		console.log(difference);
 	},
 
 	validateSort (func) {
@@ -203,26 +225,24 @@ let Editor = React.createClass({
 	},
 
 	runSortTests () {
-		// !!! not working !!!
 		let testFunc = safeEval(this.state.code);
-		tests.SORT.forEach((test) => {
-			let array = test.slice(0);
+		for (let test in tests.SORT) {
+			let array = tests.SORT[test].slice(0);
 			testFunc(array);
-		});
+		}
 	},
 
 	runSearchTests () {
-		// !!! not working !!!
 		let testFunc = safeEval(this.state.code);
-		tests.ARRAY_SEARCH.forEach((test) => {
+		for (let test in tests.ARRAY_SEARCH) {
 			let array = test.slice(0);
 			testFunc(array);
-		});
+		}
 	},
 
 	setGolfScore (ajax) {
 		let algoCount = this.state.code.split('').length;
-		let mult = 100-algoCount;
+		let mult = (1000-algoCount)/1000;
 		this.setState({ golfScore: mult }, this.submit.bind(this, ajax));
 	},
 
