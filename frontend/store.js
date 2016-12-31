@@ -3,23 +3,13 @@ import rootReducer from './reducer.js';
 
 const preloadedState = {
   leaderboard: [],
+  currentAlgorithm: {},
   currentUser: {}
 };
 
-const store = createStore(rootReducer);
-
-export default store;
-
-/*
-
-leaderboard: {
-
-}
+const configureStore = (state = preloadedState) => (
+  createStore(rootReducer, state)
+);
 
 
-currentUser: {
-  userId
-  username
-
-}
-*/
+export default configureStore;
