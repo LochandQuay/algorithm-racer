@@ -1,4 +1,4 @@
-import { ADD_SCORE, REMOVE_SCORE, CLEAR } from './leaderboard_actions';
+import { ADD_SCORE, REMOVE_SCORE, CLEAR } from '../actions/leaderboard_actions';
 import merge from 'lodash/merge';
 
 
