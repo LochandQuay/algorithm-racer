@@ -25,7 +25,9 @@ let Editor = React.createClass({
 			golfScore: 0,
 			totalScore: 0,
 			title: "",
-			category: 'SORT'
+			category: 'SORT',
+			testArgs: "Enter your test argument(s).",
+			testOutput: "Output will appear here."
 		};
 	},
 
@@ -44,6 +46,10 @@ let Editor = React.createClass({
 	changeMode (e) {
 		let mode = e.target.value;
 		this.setState({ mode: mode, code: defaults[mode] });
+	},
+
+	updateTestArgs (e) {
+		this.setState({ testArgs: e.target.value });
 	},
 
 	toggleReadOnly () {
@@ -90,6 +96,15 @@ let Editor = React.createClass({
 
 	runCode () {
 		safeEval(this.state.code);
+	},
+
+	testCode () {
+		console.log(this.state.testArgs);
+		console.log(typeof this.state.testArgs);
+		let testFunc = safeEval(this.state.code);
+		let args = safeEval(this.state.testArgs);
+		let output = testFunc(args);
+		this.setState({ testOutput: output });
 	},
 
 	setSpeed (ajax) {
@@ -148,6 +163,20 @@ let Editor = React.createClass({
 							 ref="submit"
 							 onClick={this.handleSubmit}
 							 value='Submit Algorithm' />
+
+				<button onClick={this.testCode}>
+					Run Code
+				</button>
+
+				<div id="editor-testing">
+				  <input onChange={this.updateTestArgs}
+					  type='text'
+					  value={this.state.testArgs} />
+
+					<textarea value={this.state.testOutput}
+										readOnly="true" />
+
+				</div>
 			</div>
 		);
 	}
