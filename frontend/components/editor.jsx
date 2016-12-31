@@ -168,7 +168,7 @@ let Editor = React.createClass({
 			output = testFunc(args);
 			//testing purposes
 			console.log(this.validateSort(testFunc));
-			this.testSpeed();
+			this.testSpeed(testFunc);
 		}
 		catch (e) {
 			output = "Error! " + e.message;
@@ -180,7 +180,7 @@ let Editor = React.createClass({
 
 	setSpeed (ajax) {
 		let start = window.performance.now();
-		for (var i = 0; i < 100; i++) {
+		for (var i = 0; i < 200; i++) {
 			if (this.state.category === "SORT") {
 				this.runSortTests();
 			}else if (this.state.category === "ARRAY_SEARCH") {
@@ -196,18 +196,22 @@ let Editor = React.createClass({
 	},
 
 	//Purely for testing at the moment, might not need in production code
-	testSpeed () {
-		let start = window.performance.now();
-		for (var i = 0; i < 100; i++) {
+	testSpeed (func) {
+		let runs = 100;
+		let start = performance.now();
+		for (var i = 0; i < runs; i++) {
 			if (this.state.category === "SORT") {
-				this.runSortTests();
+				this.runSortTests(func);
 			}else if (this.state.category === "ARRAY_SEARCH") {
-				this.runSearchTests();
+				this.runSearchTests(func);
 			}
 		}
-		let end = window.performance.now();
+		let end = performance.now();
 		let difference = end - start;
-		console.log(difference);
+		let average = difference / runs;
+		console.log("num runs: " + runs);
+		console.log("total time: " + difference);
+		console.log("avg time: " + average);
 	},
 
 	validateSort (func) {
@@ -223,19 +227,17 @@ let Editor = React.createClass({
 		return (testResult === tests.ARRAY_SEARCH.large_sorted.index);
 	},
 
-	runSortTests () {
-		let testFunc = safeEval(this.state.code);
+	runSortTests (func) {
 		for (let test in tests.SORT) {
 			let array = tests.SORT[test].slice(0);
-			testFunc(array);
+			func(array);
 		}
 	},
 
-	runSearchTests () {
-		let testFunc = safeEval(this.state.code);
+	runSearchTests (func) {
 		for (let test in tests.ARRAY_SEARCH) {
 			let array = test.slice(0);
-			testFunc(array);
+			func(array);
 		}
 	},
 
