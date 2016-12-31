@@ -1,6 +1,5 @@
 import { ADD_ALGORITHM, REMOVE_ALGORITHM } from '../actions/current_algorithm_actions';
 
-
 const currentAlgorithmReducer = (state = {}, action) => {
   switch(action.type) {
     case ADD_ALGORITHM:
