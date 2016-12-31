@@ -79,8 +79,8 @@ let Editor = React.createClass({
 			golfScore: 0,
 			totalScore: 0,
 			title: "",
-			category: 'SORT',
-			testArgs: "Enter your test argument(s).",
+			category: '',
+			testArgs: "",
 			testOutput: "Output will appear here."
 		};
 	},
@@ -236,16 +236,16 @@ let Editor = React.createClass({
 			<div>
 				<h2>Submit an Algorithm</h2>
 				<label>
-					Title:
 					<input onChange={this.updateTitle}
 								 type='text'
+								 placeholder="Title"
 								 value={this.state.title} />
 				</label>
 
 				<label className="select-arrow">
-					Category:
 					<select value={this.state.category}
 									onChange={this.updateCategory}>
+						<option value="" disabled>Category</option>
 		        <option value="SORT">Sorting</option>
 		        <option value="ARRAY_SEARCH">Array Searching</option>
 	      	</select>
@@ -266,14 +266,16 @@ let Editor = React.createClass({
 							 onClick={this.handleSubmit}
 							 value='Submit Algorithm' />
 
-				<button onClick={this.testCode}>
-					Run Code
+				<button className="test-button"
+							 	onClick={this.testCode}>
+					Test Code
 				</button>
 
 				<div id="editor-testing">
 				  <input onChange={this.updateTestArgs}
-					  type='text'
-					  value={this.state.testArgs} />
+							   type='text'
+							 	 placeholder="Enter test arguments here"
+							   value={this.state.testArgs} />
 
 					<textarea value={this.state.testOutput}
 										readOnly="true" />

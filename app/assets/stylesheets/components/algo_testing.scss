@@ -1,0 +1,28 @@
+.test-button {
+  background-color: $dark-blue;
+  margin-left: 8px;
+
+  &:hover {
+    background-color: $blue;
+  }
+
+  &:active {
+    border: 3px solid $blue;
+    background-color: white;
+    color: $blue;
+  }
+}
+
+#editor-testing {
+  margin-top: 8px;
+
+  input {
+    box-sizing: border-box;
+    width: 286px;
+    display: block;
+  }
+
+  textarea {
+    width: 286px;
+  }
+}
