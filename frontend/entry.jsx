@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Editor from './components/editor';
+import Root from './components/root';
+import configureStore from './store';
 
 $(() => {
-  const editor = document.getElementById('editor');
-  ReactDOM.render(<Editor />, editor);
+  const store = configureStore();
+  const app = document.getElementById('app');
+  ReactDOM.render(<Root />, app);
 });

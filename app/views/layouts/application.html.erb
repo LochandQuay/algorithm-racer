@@ -18,11 +18,10 @@
         <h1>algorithmRacer_</h1>
         <div>
           <% if current_user %>
-          <%= link_to current_user.username, user_url(current_user) %>
-          <%= button_to "Log Out", sessions_url(current_user), method: :delete %>
+            <%= button_to "Log Out (#{current_user.username})", sessions_url(current_user), method: :delete %>
           <% else %>
-          <%= link_to "Log In", new_sessions_url, class: 'button-link' %>
-          <%= link_to "Sign Up", new_user_url, class: 'button-link' %>
+            <%= link_to "Log In", new_sessions_url, class: 'button-link' %>
+            <%= link_to "Sign Up", new_user_url, class: 'button-link' %>
           <% end %>
         </div>
       </nav>
@@ -83,19 +82,12 @@
           </div>
         </li></a>
       </ol> -->
-      <%= yield %>
-      <br>
-      <label for="">Title: <input type="text" name="" value=""></label>
-      <label for="" class="select-arrow">Category: <select class="" name="">
-        <option value="Sorting">Sorting</option>
-        <option value="Array Searching">Array Searching</option>
-        <option value="Tree Searching">Tree Searching</option>
-        <option value="Permutations">Permutations</option>
-      </select></label>
-      <br>
-      <div id="editor"></div>
-      <br>
-      <input type="submit" name="" value="Submit Algorithm">
+      <% if current_user %>
+        <div id="app"></div>
+      <% else %>
+        <%= yield %>
+      <% end %>
+
     </section>
 
 

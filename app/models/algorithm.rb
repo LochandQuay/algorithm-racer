@@ -1,5 +1,5 @@
 class Algorithm < ApplicationRecord
-  validates :title, :category, :body, :user_id, presence: true
+  validates :title, :category, :body, :user, presence: true
   validates :category, inclusion: { in: %w(SORT ARRAY_SEARCH) }
 
   belongs_to :user
@@ -14,5 +14,5 @@ class Algorithm < ApplicationRecord
 
     @algos
   end
-  
+
 end

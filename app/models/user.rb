@@ -27,14 +27,15 @@ class User < ApplicationRecord
     self.save
   end
 
+  def is_password?(pw)
+    BCrypt::Password.new(self.password_digest).is_password?(pw)
+  end
+  
   private
 
   def generate_session_token
     SecureRandom.urlsafe_base64
   end
 
-  def is_password?(pw)
-    BCrypt::Password.new(self.password_digest).is_password?(pw)
-  end
-  
+
 end
