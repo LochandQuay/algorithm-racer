@@ -97,16 +97,16 @@ let Editor = React.createClass({
 		this.runCode();
 		let end = window.performance.now();
 		let difference = end - start;
-		let baseScore = end - 250;
-		let subtractionMultiplier = (baseScore / 20);
-		let speedScore = 100- (subtractionMultiplier * 5);
+		let speedScore = 100-difference;
 		this.setState({
 			speed: speedScore
 		}, this.setGolfScore.bind(this, ajax));
 	},
 
 	setGolfScore (ajax) {
-		this.setState({ golfScore: 5 }, this.submit.bind(this, ajax));
+		let algoCount = this.state.code.split('').length;
+		let mult = 100-algoCount;
+		this.setState({ golfScore: mult }, this.submit.bind(this, ajax));
 	},
 
 	render () {
