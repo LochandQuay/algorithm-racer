@@ -147,7 +147,7 @@ let Editor = React.createClass({
 
 	submit (ajax) {
 		this.setState({
-			totalScore: this.state.speed * this.state.golfScore
+			totalScore: this.state.speed * this.state.golfScore * 100;
 		}, ajax);
 	},
 
@@ -183,7 +183,7 @@ let Editor = React.createClass({
 		}
 		let end = window.performance.now();
 		let difference = end - start;
-		let speedScore = 100-difference;
+		let speedScore = (100-difference)/100;
 		this.setState({
 			speed: speedScore
 		}, this.setGolfScore.bind(this, ajax));
@@ -222,7 +222,7 @@ let Editor = React.createClass({
 
 	setGolfScore (ajax) {
 		let algoCount = this.state.code.split('').length;
-		let mult = 100-algoCount;
+		let mult = (1000-algoCount)/1000;
 		this.setState({ golfScore: mult }, this.submit.bind(this, ajax));
 	},
 
