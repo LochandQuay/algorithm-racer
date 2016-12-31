@@ -11,14 +11,68 @@ require('codemirror/mode/xml/xml');
 require('codemirror/mode/markdown/markdown');
 
 let defaults = {
-	ruby: "def my_function\n\tputs \"Hello World!\"\nend",
-	javascript: 'myFunction = () => {\n\talert("Hello World!");\n}'
+	SORT: {
+		javascript: 'mySort = (array) => {\n' +
+								'\t//code goes here\n' +
+								'\treturn array\n}'
+	},
+	ARRAY_SEARCH: {
+		javascript: 'mySearch = (array, target) => {\n' +
+								'\t//code goes here\n' +
+								'\treturn index\n}'
+	}
 };
+
+
+let generateSearchTest = (length, max=1000) => {
+	let arr = randomArray(length, max).sort(defaultSort);
+	let idx = Math.round(Math.random() * arr.length);
+	let tgt = arr[idx];
+	return { array: arr, target: tgt, index: idx };
+};
+
+let generateSortTests = (length, max=1000) => {
+	let randArr = randomArray(length, max);
+	let sortedArr = randArr.slice(0).sort(defaultSort);
+	let reversedArr = sortedArr.slice(0).reverse();
+	return { random: randArr, sorted: sortedArr, reverse: reversedArr };
+};
+
+let defaultSort = (a, b) => {
+		return a-b;
+};
+
+let randomArray = (length, max=1000) => {
+	let array = [];
+	for (var i = 0; i < length; i++) {
+		array.push(Math.round(Math.random() * max));
+	}
+	return array;
+};
+
+let isArrayEqual = (arr1, arr2) => {
+    var i = arr1.length;
+    if (i != arr2.length) return false;
+    while (i--) {
+        if (arr1[i] !== arr2[i]) return false;
+    }
+    return true;
+};
+
+let tests = {
+	SORT: generateSortTests(50),
+
+	ARRAY_SEARCH: {
+		small_sorted: generateSearchTest(20),
+		large_sorted: generateSearchTest(100)
+	}
+};
+
 
 let Editor = React.createClass({
 	getInitialState () {
 		return {
-			code: defaults.javascript,
+			code: defaults.SORT.javascript,
 			readOnly: false,
 			mode: 'javascript',
 			speed: 0,
@@ -31,6 +85,7 @@ let Editor = React.createClass({
 		};
 	},
 
+
 	updateCode (newCode) {
 		this.setState({ code: newCode });
 	},
@@ -40,7 +95,9 @@ let Editor = React.createClass({
 	},
 
 	updateCategory (e) {
-		this.setState({ category: e.target.value });
+		let category = e.target.value;
+		this.setState({ category: category });
+		this.setState({ code: defaults[category][this.state.mode] });
 	},
 
 	changeMode (e) {
@@ -94,28 +151,73 @@ let Editor = React.createClass({
 		}, ajax);
 	},
 
-	runCode () {
-		safeEval(this.state.code);
-	},
+	// This function might be superfluous now. Should we remove it?
+	// runCode () {
+	// 	let testFunc = safeEval(this.state.code);
+	// 	safeEval(testFunc);
+	// },
 
 	testCode () {
-		console.log(this.state.testArgs);
-		console.log(typeof this.state.testArgs);
-		let testFunc = safeEval(this.state.code);
-		let args = safeEval(this.state.testArgs);
-		let output = testFunc(args);
+		let testFunc = "";
+		let args = "";
+		let output = "";
+
+		try {
+			testFunc = safeEval(this.state.code);
+			args = safeEval(this.state.testArgs);
+			output = testFunc(args);
+			console.log(this.validateSort(testFunc));
+		}
+		catch (e) {
+			output = "Error! " + e.message;
+		}
+
+
 		this.setState({ testOutput: output });
 	},
 
 	setSpeed (ajax) {
 		let start = window.performance.now();
-		this.runCode();
+		for (var i = 0; i < 100; i++) {
+			this.runSortTests();
+		}
 		let end = window.performance.now();
 		let difference = end - start;
 		let speedScore = 100-difference;
 		this.setState({
 			speed: speedScore
 		}, this.setGolfScore.bind(this, ajax));
+	},
+
+	validateSort (func) {
+		let testResult = func(tests.SORT.random);
+		return (isArrayEqual(testResult, tests.SORT.sorted));
+	},
+
+	validateSearch (func) {
+		let array = tests.ARRAY_SEARCH.large_sorted.array;
+		let target = tests.ARRAY_SEARCH.large_sorted.target;
+		let testResult = func(array, target);
+
+		return (testResult === tests.ARRAY_SEARCH.large_sorted.index);
+	},
+
+	runSortTests () {
+		// !!! not working !!!
+		let testFunc = safeEval(this.state.code);
+		tests.SORT.forEach((test) => {
+			let array = test.slice(0);
+			testFunc(array);
+		});
+	},
+
+	runSearchTests () {
+		// !!! not working !!!
+		let testFunc = safeEval(this.state.code);
+		tests.ARRAY_SEARCH.forEach((test) => {
+			let array = test.slice(0);
+			testFunc(array);
+		});
 	},
 
 	setGolfScore (ajax) {
