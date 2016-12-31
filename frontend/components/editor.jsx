@@ -96,8 +96,12 @@ let Editor = React.createClass({
 		let start = window.performance.now();
 		this.runCode();
 		let end = window.performance.now();
+		let difference = end - start;
+		let baseScore = end - 250;
+		let subtractionMultiplier = (baseScore / 20);
+		let speedScore = 100- (subtractionMultiplier * 5);
 		this.setState({
-			speed: Math.floor(end-start)
+			speed: speedScore
 		}, this.setGolfScore.bind(this, ajax));
 	},
 
