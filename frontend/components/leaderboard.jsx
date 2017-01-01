@@ -39,6 +39,9 @@ class Leaderboard extends React.Component {
 		this.fetchScores = this.fetchScores.bind(this);
 		this.fetchSortScores = this.fetchSortScores.bind(this);
 		this.fetchSearchScores = this.fetchSearchScores.bind(this);
+		this.handleAll = this.handleAll.bind(this);
+		this.handleSort = this.handleSort.bind(this);
+		this.handleSearch = this.handleSearch.bind(this);
 		this.fetchScores();
   }
 
@@ -66,15 +69,24 @@ class Leaderboard extends React.Component {
 		}).then(scores => this.setScores(scores));
 	}
 
+	handleAll() {
+		this.setState({ sortBy: 'All' }, this.fetchScores);
+	}
+
+	handleSort() {
+		this.setState({ sortBy: 'Sorting' }, this.fetchSortScores);
+	}
+
+	handleSearch() {
+		this.setState({ sortBy: 'Searching' }, this.fetchSearchScores);
+	}
+
 	setScores(scores) {
 		this.setState({scores: scores});
 	}
 
   render() {
-    const leaderboardSortTitle = this.state.sortBy
-      .slice(0, 1)
-      .toUpperCase()
-      .concat(this.state.sortBy.slice(1));
+    const leaderboardSortTitle = this.state.sortBy;
 
     const leaderboardScores = this.state.scores.map( (score, i) => (
 			<a href='#' key={i}>
@@ -88,14 +100,14 @@ class Leaderboard extends React.Component {
     );
     return (
       <div>
-        <h2>{ leaderboardSortTitle }</h2>
+        <h2>{ leaderboardSortTitle } Leaderboard</h2>
         <div className="group leader-nav">
         	<h4>Go to:</h4>
         	<ul className="leaderboard-dropdown">
         		<div className="leaderboard-dropdown-items">
-        			<li onClick={this.fetchSortScores}>Sorting</li>
-        			<li onClick={this.fetchSearchScores}>Searching</li>
-        			<li onClick={this.fetchScores}>All</li>
+        			<li onClick={this.handleSort}>Sorting</li>
+        			<li onClick={this.handleSearch}>Searching</li>
+        			<li onClick={this.handleAll}>All</li>
         		</div>
         	</ul>
         </div>
