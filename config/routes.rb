@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :users, only: [:new, :create, :show]
 
-  resources :algorithms, except: [:edit, :update]
+  resources :algorithms, except: [:edit, :update, :show]
 
   get '/algorithms/sort', to: 'algorithms#top_sorting', as: 'top_sort'
 

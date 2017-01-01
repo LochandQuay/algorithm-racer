@@ -35,7 +35,7 @@ const LeaderboardScores = [
 class Leaderboard extends React.Component {
   constructor () {
     super();
-    this.state = { sortBy: '', scores: LeaderboardScores};
+    this.state = { sortBy: 'All', scores: LeaderboardScores};
 		this.fetchScores = this.fetchScores.bind(this);
 		this.fetchSortScores = this.fetchSortScores.bind(this);
 		this.fetchSearchScores = this.fetchSearchScores.bind(this);
@@ -63,7 +63,7 @@ class Leaderboard extends React.Component {
 			method: 'GET',
 			url: 'http://localhost:3000/algorithms/array_search',
 			dataType: 'json'
-		}).then(scores => this.setScores(JSON.parse(scores)));
+		}).then(scores => this.setScores(scores));
 	}
 
 	setScores(scores) {
