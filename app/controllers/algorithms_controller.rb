@@ -1,14 +1,11 @@
 class AlgorithmsController < ApplicationController
 
-  LIMIT = 20
+  LIMIT = 5
 
   def create
     @algorithm = current_user.algorithms.build(algorithm_params)
     if @algorithm.save
-      # respond_to do |format|
-      #   format.html { redirect_to request.referrer }
-      #   format.json { render :show }
-      # end
+
     else
       render json: @algorithm.errors.full_messages
     end

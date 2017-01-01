@@ -36,11 +36,10 @@ class Leaderboard extends React.Component {
   constructor () {
     super();
     this.state = { sortBy: '', scores: LeaderboardScores};
-		// this.fetchScores();
-		console.log(this.scores);
 		this.fetchScores = this.fetchScores.bind(this);
 		this.fetchSortScores = this.fetchSortScores.bind(this);
 		this.fetchSearchScores = this.fetchSearchScores.bind(this);
+		this.fetchScores();
   }
 
 	fetchScores() {
@@ -64,7 +63,7 @@ class Leaderboard extends React.Component {
 			method: 'GET',
 			url: 'http://localhost:3000/algorithms/array_search',
 			dataType: 'json'
-		}).then(scores => this.setScores(scores));
+		}).then(scores => this.setScores(JSON.parse(scores)));
 	}
 
 	setScores(scores) {
@@ -79,11 +78,11 @@ class Leaderboard extends React.Component {
 
     const leaderboardScores = this.state.scores.map( (score, i) => (
 			<a href='#' key={i}>
-				<LeaderboardScore type={score.type}
-					score={score.score}
-					username={score.username}
+				<LeaderboardScore type={score.title}
+					score={score.total_score}
+					username={score.author}
 					speed={score.speed}
-					golf={score.golf} />
+					golf={score.golf_score} />
 			</a>
       )
     );
