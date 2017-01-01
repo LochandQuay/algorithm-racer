@@ -128,9 +128,9 @@ let Editor = React.createClass({
 				algorithm: {
 					title: this.state.title,
 					body: this.state.code,
-					speed: this.state.speed,
+					speed: this.state.speed * 100,
 					category: this.state.category,
-					golf_score: this.state.golfScore,
+					golf_score: this.state.golfScore * 100,
 					total_score: this.state.totalScore
 				}
 			};
@@ -143,6 +143,13 @@ let Editor = React.createClass({
 	},
 
 	handleSuccess (resp) {
+		this.setState({
+			title: "",
+			totalScore: 0,
+			golfScore: 0,
+			category: "",
+			speed: 0
+		});
 		this.refs.submit.removeAttribute('disabled');
 	},
 
@@ -180,12 +187,13 @@ let Editor = React.createClass({
 	},
 
 	setSpeed (ajax) {
+		let func = safeEval(this.state.code);
 		let start = window.performance.now();
 		for (var i = 0; i < 200; i++) {
 			if (this.state.category === "SORT") {
-				this.runSortTests();
+				this.runSortTests(func);
 			}else if (this.state.category === "ARRAY_SEARCH") {
-				this.runSearchTests();
+				this.runSearchTests(func);
 			}
 		}
 		let end = window.performance.now();
