@@ -245,7 +245,7 @@ let Editor = React.createClass({
 
 	runSearchTests (func) {
 		for (let test in tests.ARRAY_SEARCH) {
-			let array = test.slice(0);
+			let array = tests.SEARCH[test].slice(0);
 			func(array);
 		}
 	},
