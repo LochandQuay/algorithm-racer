@@ -77,12 +77,14 @@ class Leaderboard extends React.Component {
       .toUpperCase()
       .concat(this.state.sortBy.slice(1));
 
-    const leaderboardScores = this.state.scores.map( (score) => (
-      <LeaderboardScore type={score.type}
-                        score={score.score}
-                        username={score.username}
-                        speed={score.speed}
-                        golf={score.golf} />
+    const leaderboardScores = this.state.scores.map( (score, i) => (
+			<a href='#' key={i}>
+				<LeaderboardScore type={score.type}
+					score={score.score}
+					username={score.username}
+					speed={score.speed}
+					golf={score.golf} />
+			</a>
       )
     );
     return (
@@ -94,7 +96,6 @@ class Leaderboard extends React.Component {
         		<div className="leaderboard-dropdown-items">
         			<li onClick={this.fetchSortScores}>Sorting</li>
         			<li onClick={this.fetchSearchScores}>Searching</li>
-        			// <li>Other</li>
         			<li onClick={this.fetchScores}>All</li>
         		</div>
         	</ul>
