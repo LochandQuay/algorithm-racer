@@ -35,22 +35,41 @@ const LeaderboardScores = [
 class Leaderboard extends React.Component {
   constructor () {
     super();
-    this.state = { sortBy: 'all', scores: LeaderboardScores };
+    this.state = { sortBy: '', scores: LeaderboardScores};
+		// this.fetchScores();
+		console.log(this.scores);
+		this.fetchScores = this.fetchScores.bind(this);
+		this.fetchSortScores = this.fetchSortScores.bind(this);
+		this.fetchSearchScores = this.fetchSearchScores.bind(this);
   }
 
-  sortByType(type) {
-    // switch (type) {
-    //   case 'all':
-    //
-    //   case 'sorting':
-    //
-    //   case 'searching':
-    //
-    //   case 'other':
+	fetchScores() {
+		$.ajax ({
+			method: 'GET',
+			url: 'http://localhost:3000/algorithms',
+			dataType: 'json'
+		}).then(scores => this.setScores(scores));
+	}
 
-    // }
-  }
+	fetchSortScores() {
+		$.ajax ({
+			method: 'GET',
+			url: 'http://localhost:3000/algorithms/sort',
+			dataType: 'json'
+		}).then(scores => this.setScores(scores));
+	}
 
+	fetchSearchScores() {
+		$.ajax ({
+			method: 'GET',
+			url: 'http://localhost:3000/algorithms/array_search',
+			dataType: 'json'
+		}).then(scores => this.setScores(scores));
+	}
+
+	setScores(scores) {
+		this.setState({scores: scores});
+	}
 
   render() {
     const leaderboardSortTitle = this.state.sortBy
@@ -73,10 +92,10 @@ class Leaderboard extends React.Component {
         	<h4>Go to:</h4>
         	<ul className="leaderboard-dropdown">
         		<div className="leaderboard-dropdown-items">
-        			<li>Sorting</li>>
-        			<li>Searching</li>
-        			<li>Other</li>
-        			<li>All</li>
+        			<li onClick={this.fetchSortScores}>Sorting</li>
+        			<li onClick={this.fetchSearchScores}>Searching</li>
+        			// <li>Other</li>
+        			<li onClick={this.fetchScores}>All</li>
         		</div>
         	</ul>
         </div>
