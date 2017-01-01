@@ -34,25 +34,7 @@ class AlgorithmsController < ApplicationController
   end
 
   def index
-    @algorithms = Algorithm.top_algos_by_category(LIMIT)
-
-    respond_to do |format|
-      format.html { render :index }
-      format.json { render :index }
-    end
-  end
-
-  def top_sorting
-    @algorithms = Algorithm.top_algos_by_category(LIMIT, "SORT")
-
-    respond_to do |format|
-      format.html { render :index }
-      format.json { render :index }
-    end
-  end
-
-  def top_searching
-    @algorithms = Algorithm.top_algos_by_category(LIMIT, "ARRAY_SEARCH")
+    @algorithms = Algorithm.top_algos_by_category(LIMIT, params[:category])
 
     respond_to do |format|
       format.html { render :index }
