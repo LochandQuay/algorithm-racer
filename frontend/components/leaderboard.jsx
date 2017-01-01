@@ -7,8 +7,6 @@ class Leaderboard extends React.Component {
     super();
     this.state = { sortBy: 'All', scores: []};
 		this.fetchScores = this.fetchScores.bind(this);
-		this.fetchSortScores = this.fetchSortScores.bind(this);
-		this.fetchSearchScores = this.fetchSearchScores.bind(this);
 		this.handleAll = this.handleAll.bind(this);
 		this.handleSort = this.handleSort.bind(this);
 		this.handleSearch = this.handleSearch.bind(this);
