@@ -143,6 +143,7 @@ let Editor = React.createClass({
 	},
 
 	handleSuccess (resp) {
+
 		this.setState({
 			title: "",
 			totalScore: 0,
@@ -222,9 +223,6 @@ let Editor = React.createClass({
 		let end = performance.now();
 		let difference = end - start;
 		let average = difference / runs;
-		console.log("num runs: " + runs);
-		console.log("total time: " + difference);
-		console.log("avg time: " + average);
 	},
 
 	validateSort (func) {
@@ -269,11 +267,17 @@ let Editor = React.createClass({
 		};
 
 		let placeholder = () => {
-			let text = (this.state.category === "SORT") ? "[11, 5, 3, 7]" : "([11, 5, 3, 7], 3)"
-			return text + " // test arguments"
-		}
+			let text = (this.state.category === "SORT") ? "[11, 5, 3, 7]" : "([11, 5, 3, 7], 3)";
+			return text + " // test arguments";
+		};
 		return (
 			<div>
+				<div className={this.state.className} ref='dialog'>
+	        Speed: {this.state.speed * 100}<br />
+				Golf Score: {this.state.golfScore * 100}<br />
+					Total Score: {this.state.totalScore}
+				</div>
+
 				<h2>Submit an Algorithm</h2>
 				<label>
 					<input onChange={this.updateTitle}
