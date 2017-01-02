@@ -201,12 +201,7 @@ let Editor = React.createClass({
 				args = safeEval(this.state.testArgs);
 				output = testFunc(args);
 			}
-			//testing purposes
-			if (this.state.category === "SORT") {
-				console.log(this.validateSort(testFunc));
-			}else if (this.state.category === "ARRAY_SEARCH"){
-				console.log(this.validateSearch(testFunc));
-			}
+
 			this.testSpeed(testFunc);
 		}
 		catch (e) {
@@ -276,7 +271,6 @@ let Editor = React.createClass({
 		for (let test in tests.ARRAY_SEARCH) {
 			let arr = tests.ARRAY_SEARCH[test].array.slice(0);
 			let tgt = tests.ARRAY_SEARCH[test].target;
-			console.log(func(arr, tgt));
 		}
 	},
 
