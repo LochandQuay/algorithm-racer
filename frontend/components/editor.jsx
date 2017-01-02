@@ -2,6 +2,8 @@ let React = require('react');
 let ReactDOM = require('react-dom');
 let Codemirror = require('../src/Codemirror');
 let safeEval = require('safe-eval');
+let Leaderboard = require('./leaderboard');
+
 
 let APIUtil = require('../api_util');
 
@@ -295,11 +297,14 @@ let Editor = React.createClass({
 
 		return (
 			<div>
+
 				<div className={this.state.dialogClass} ref='dialog'>
 					Speed: {this.state.speed}<br />
 					Golf Score: {this.state.golfScore * 100}<br />
 					Total Score: {this.state.totalScore}
 				</div>
+
+				<Leaderboard />
 
 				<h2>Submit an Algorithm</h2>
 				<label>
