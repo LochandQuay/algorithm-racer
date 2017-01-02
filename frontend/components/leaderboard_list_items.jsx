@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LeaderboardScore = ({type, score, username, speed, golf, idx}) => {
+const LeaderboardScore = ({type, score, username, speed, golf, code}) => {
 
   return (
     <li>
@@ -10,6 +10,9 @@ const LeaderboardScore = ({type, score, username, speed, golf, idx}) => {
         Author: {username}<br />
         Speed: {speed}<br />
         Golf Score: {golf}
+      </div>
+      <div className='leaderboard-item-code'>
+        {code}
       </div>
     </li>
   );

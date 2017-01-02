@@ -82,7 +82,8 @@ let Editor = React.createClass({
 			title: "",
 			category: "SORT",
 			testArgs: "",
-			testOutput: "Output will appear here."
+			testOutput: "Output will appear here.",
+			dialogClass: 'dialog'
 		};
 	},
 
@@ -150,7 +151,7 @@ let Editor = React.createClass({
 				}
 			};
 			APIUtil.createAlgo(data)
-				.then((resp) => this.handleSuccess(resp));
+				.then((resp) => this.handleSuccess(resp), this.handleSuccess);
 		};
 		this.setSpeed(ajax);
 
@@ -158,20 +159,26 @@ let Editor = React.createClass({
 	},
 
 	handleSuccess (resp) {
+		this.setState({
+			dialogClass: 'dialog-on'
+		}, () => setTimeout(this.reset, 2000));
+	},
 
+	reset () {
 		this.setState({
 			title: "",
 			totalScore: 0,
 			golfScore: 0,
 			category: "",
-			speed: 0
+			speed: 0,
+			dialogClass: 'dialog'
 		});
 		this.refs.submit.removeAttribute('disabled');
 	},
 
 	submit (ajax) {
 		this.setState({
-			totalScore: this.state.speed * this.state.golfScore * 10000
+			totalScore: this.state.speed * this.state.golfScore * 100
 		}, ajax);
 	},
 
@@ -290,11 +297,13 @@ let Editor = React.createClass({
 			let text = (this.state.category === "SORT") ? "[11, 5, 3, 7]" : "([11, 5, 3, 7], 3)";
 			return text + " // test arguments";
 		};
+
+
 		return (
 			<div>
-				<div className={this.state.className} ref='dialog'>
-	        Speed: {this.state.speed * 100}<br />
-				Golf Score: {this.state.golfScore * 100}<br />
+				<div className={this.state.dialogClass} ref='dialog'>
+					Speed: {this.state.speed}<br />
+					Golf Score: {this.state.golfScore * 100}<br />
 					Total Score: {this.state.totalScore}
 				</div>
 

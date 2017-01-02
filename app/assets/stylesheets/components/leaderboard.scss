@@ -64,3 +64,12 @@
   float: none;
   margin: 0 auto;
 }
+
+.leaderboard-item-code {
+  position: relative;
+  display: none;
+}
+
+.visible {
+  display: block;
+}

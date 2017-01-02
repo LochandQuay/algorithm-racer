@@ -12,6 +12,7 @@ class Leaderboard extends React.Component {
 		this.handleSort = this.handleSort.bind(this);
 		this.handleSearch = this.handleSearch.bind(this);
 		this.handleScroll = this.handleScroll.bind(this);
+    this.showCode = this.showCode.bind(this);
 		this.fetchScores();
   }
 
@@ -60,11 +61,19 @@ class Leaderboard extends React.Component {
 	}
 
 	setScores(scores) {
+    console.log(scores[0]);
 		this.setState({
       scores: scores,
       maxScore: scores[scores.length-1].total_score
     });
 	}
+
+  showCode(e) {
+    e.preventDefault();
+    let $a = $(e.currentTarget);
+    console.log($a.find('div.leaderboard-item-code'));
+    $a.find('div.leaderboard-item-code').toggleClass('.visible');
+  }
 
   render() {
     const leaderboardSortTitle = () => {
@@ -78,14 +87,15 @@ class Leaderboard extends React.Component {
     };
 
     const leaderboardScores = this.state.scores.map( (score, i) => (
-			<a href='#' key={i}>
+			<a href='#' onClick={this.showCode} key={i}>
 				<LeaderboardScore type={score.title}
 					score={score.total_score}
 					username={score.author}
 					speed={score.speed}
-					golf={score.golf_score} />
+					golf={score.golf_score}
+          code={score.body} />
 			</a>
-      )
+    )
     );
 
     return (

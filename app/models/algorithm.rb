@@ -14,10 +14,9 @@ class Algorithm < ApplicationRecord
     if max_score
       @algos = @algos.where('total_score < :max', max: max_score)
     end
-    
+
     @algos = @algos.where("category = :cat", cat: category) if category
     @algos = @algos.limit(limit) if limit
-
 
     @algos
   end

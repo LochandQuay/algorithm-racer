@@ -4,7 +4,26 @@
   opacity: 0;
   color: white;
   opacity: 0;
-  width: 0px;
+  width: auto;
+  font-size: 16px;
+  white-space: nowrap;
+  position: fixed;
+  background: $blue;
+  z-index: 2;
+  padding: 10px;
+  top: 20px;
+  left: 200px;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px $gray;
+}
+
+.dialog-on {
+  transition: all 0.2s ease-out;
+  text-decoration: none;
+  opacity: 0;
+  color: white;
+  opacity: 1;
+  width: auto;
   font-size: 16px;
   white-space: nowrap;
   position: fixed;
