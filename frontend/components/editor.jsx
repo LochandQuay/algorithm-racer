@@ -227,7 +227,7 @@ let Editor = React.createClass({
 		}
 		let end = window.performance.now();
 		let difference = end - start;
-		let speedScore = 100 - (difference / runs);
+		let speedScore = 100 - (difference);
 		this.setState({
 			speed: speedScore
 		}, this.setGolfScore.bind(this, ajax));
