@@ -122,6 +122,21 @@ let Editor = React.createClass({
 
 	handleSubmit (e) {
 		e.preventDefault();
+		//make sure the user submitted function works correctly
+		//for sorts and searches, if not, return false
+		let testFunc = safeEval(this.state.code);
+		if (this.state.category === "SORT"){
+			if (!this.validateSort(testFunc)){
+				alert('invalid sort function');
+				return false;
+			}
+		}else if (this.state.category === "ARRAY_SEARCH"){
+			if (!this.validateSearch(testFunc)){
+				alert('invalid search function');
+				return false;
+			}
+		}
+
 		this.refs.submit.setAttribute('disabled', 'disabled');
 		const ajax = () => {
 			let data = {
@@ -167,14 +182,18 @@ let Editor = React.createClass({
 	// },
 
 	testCode () {
-		let testFunc = "";
-		let args = "";
-		let output = "";
+		let testFunc, args, tgt, arr, output = "";
 
 		try {
 			testFunc = safeEval(this.state.code);
-			args = safeEval(this.state.testArgs);
-			output = testFunc(args);
+			if (this.state.category === "ARRAY_SEARCH"){
+				arr = safeEval(`[${this.state.testArgs}]`).shift();
+				tgt = safeEval(`[${this.state.testArgs}]`).pop();
+				output = testFunc(arr, tgt);
+			}else{
+				args = safeEval(this.state.testArgs);
+				output = testFunc(args);
+			}
 			//testing purposes
 			if (this.state.category === "SORT") {
 				console.log(this.validateSort(testFunc));
@@ -193,8 +212,9 @@ let Editor = React.createClass({
 
 	setSpeed (ajax) {
 		let func = safeEval(this.state.code);
+		let runs = 10000;
 		let start = window.performance.now();
-		for (var i = 0; i < 200; i++) {
+		for (var i = 0; i < runs; i++) {
 			if (this.state.category === "SORT") {
 				this.runSortTests(func);
 			}else if (this.state.category === "ARRAY_SEARCH") {
@@ -203,7 +223,7 @@ let Editor = React.createClass({
 		}
 		let end = window.performance.now();
 		let difference = end - start;
-		let speedScore = (100-difference)/100;
+		let speedScore = 100 - (difference / runs);
 		this.setState({
 			speed: speedScore
 		}, this.setGolfScore.bind(this, ajax));
@@ -249,7 +269,7 @@ let Editor = React.createClass({
 		for (let test in tests.ARRAY_SEARCH) {
 			let arr = tests.ARRAY_SEARCH[test].array.slice(0);
 			let tgt = tests.ARRAY_SEARCH[test].target;
-			func(arr, tgt);
+			console.log(func(arr, tgt));
 		}
 	},
 
