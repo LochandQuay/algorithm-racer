@@ -16,11 +16,6 @@ class Leaderboard extends React.Component {
 		this.fetchScores();
   }
 
-
-  componentWillReceiveProps() {
-    this.fetchScores(this.state.sortBy);
-  }
-
 	fetchScores(category) {
 		APIUtil.fetchScores(category)
       .then(scores => this.setScores(scores));
