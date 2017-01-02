@@ -73,6 +73,7 @@ class Leaderboard extends React.Component {
     let $a = $(e.currentTarget);
     console.log($a.find('div.leaderboard-item-code'));
     $a.find('div.leaderboard-item-code').toggleClass('.visible');
+    
   }
 
   render() {

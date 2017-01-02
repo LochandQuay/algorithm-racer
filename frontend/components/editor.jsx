@@ -276,7 +276,6 @@ let Editor = React.createClass({
 		for (let test in tests.ARRAY_SEARCH) {
 			let arr = tests.ARRAY_SEARCH[test].array.slice(0);
 			let tgt = tests.ARRAY_SEARCH[test].target;
-			console.log(func(arr, tgt));
 		}
 	},
 
@@ -294,7 +293,7 @@ let Editor = React.createClass({
 		};
 
 		let placeholder = () => {
-			let text = (this.state.category === "SORT") ? "[11, 5, 3, 7]" : "([11, 5, 3, 7], 3)";
+			let text = (this.state.category === "SORT") ? "[11, 5, 3, 7]" : "[1, 3, 5, 7], 3";
 			return text + " // test arguments";
 		};
 
