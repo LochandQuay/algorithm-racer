@@ -9,7 +9,7 @@ const LeaderboardScore = ({type, score, username, speed, golf, code}) => {
       <div className="leaderboard-item-hover">
         Author: {username}<br />
         Speed: {speed}<br />
-        Golf Score: {golf}
+        Golf Score: {golf}<br />
       </div>
       <div className='leaderboard-item-code'>
         {code}

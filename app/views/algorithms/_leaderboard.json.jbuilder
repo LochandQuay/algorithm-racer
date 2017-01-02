@@ -4,6 +4,7 @@ json.array! algorithms do |algorithm|
   json.total_score algorithm.total_score
   json.golf_score algorithm.golf_score
   json.speed algorithm.speed
+  json.body algorithm.body
 
   json.author algorithm.user.username
 end

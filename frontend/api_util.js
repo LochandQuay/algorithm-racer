@@ -2,7 +2,7 @@ const APIUtil = {
   createAlgo: data => $.ajax({
     type: 'POST',
     url: 'https://algo-racer.herokuapp.com/algorithms',
-    dataType: 'JSON',
+    dataType: 'jsonp',
     contentType: 'application/json',
     data: JSON.stringify(data)
   }),
