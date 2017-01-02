@@ -155,7 +155,7 @@ let Editor = React.createClass({
 
 	submit (ajax) {
 		this.setState({
-			totalScore: this.state.speed * this.state.golfScore * 100
+			totalScore: this.state.speed * this.state.golfScore * 10000
 		}, ajax);
 	},
 
