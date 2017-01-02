@@ -170,7 +170,7 @@ let Editor = React.createClass({
 
 	submit (ajax) {
 		this.setState({
-			totalScore: this.state.speed * this.state.golfScore * 100
+			totalScore: this.state.speed * this.state.golfScore * 10000
 		}, ajax);
 	},
 
@@ -287,6 +287,11 @@ let Editor = React.createClass({
 			readOnly: this.state.readOnly,
 			mode: this.state.mode
 		};
+
+		let placeholder = () => {
+			let text = (this.state.category === "SORT") ? "[11, 5, 3, 7]" : "([11, 5, 3, 7], 3)"
+			return text + " // test arguments"
+		}
 		return (
 			<div>
 				<h2>Submit an Algorithm</h2>
@@ -329,7 +334,7 @@ let Editor = React.createClass({
 				<div id="editor-testing">
 				  <input onChange={this.updateTestArgs}
 							   type='text'
-							 	 placeholder={(this.state.category === "SORT") ? "[11, 5, 3, 7]" : "[11, 5, 3, 7], 3"}
+							 	 placeholder={placeholder()}
 							   value={this.state.testArgs} />
 
 					<textarea value={this.state.testOutput}
