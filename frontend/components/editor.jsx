@@ -80,7 +80,7 @@ let Editor = React.createClass({
 			golfScore: 0,
 			totalScore: 0,
 			title: "",
-			category: '',
+			category: "SORT",
 			testArgs: "",
 			testOutput: "Output will appear here."
 		};
@@ -175,7 +175,11 @@ let Editor = React.createClass({
 			args = safeEval(this.state.testArgs);
 			output = testFunc(args);
 			//testing purposes
-			console.log(this.validateSort(testFunc));
+			if (this.state.category === "SORT") {
+				console.log(this.validateSort(testFunc));
+			}else if (this.state.category === "ARRAY_SEARCH"){
+				console.log(this.validateSearch(testFunc));
+			}
 			this.testSpeed(testFunc);
 		}
 		catch (e) {
@@ -206,7 +210,7 @@ let Editor = React.createClass({
 
 	//Purely for testing at the moment, might not need in production code
 	testSpeed (func) {
-		let runs = 100;
+		let runs = 10000;
 		let start = performance.now();
 		for (var i = 0; i < runs; i++) {
 			if (this.state.category === "SORT") {
@@ -229,7 +233,7 @@ let Editor = React.createClass({
 	},
 
 	validateSearch (func) {
-		let array = tests.ARRAY_SEARCH.large_sorted.array;
+		let array = tests.ARRAY_SEARCH.large_sorted.array.slice(0);
 		let target = tests.ARRAY_SEARCH.large_sorted.target;
 		let testResult = func(array, target);
 
@@ -245,8 +249,9 @@ let Editor = React.createClass({
 
 	runSearchTests (func) {
 		for (let test in tests.ARRAY_SEARCH) {
-			let array = tests.SEARCH[test].slice(0);
-			func(array);
+			let arr = tests.ARRAY_SEARCH[test].array.slice(0);
+			let tgt = tests.ARRAY_SEARCH[test].target;
+			func(arr, tgt);
 		}
 	},
 
@@ -304,7 +309,7 @@ let Editor = React.createClass({
 				<div id="editor-testing">
 				  <input onChange={this.updateTestArgs}
 							   type='text'
-							 	 placeholder="Enter test arguments here"
+							 	 placeholder={(this.state.category === "SORT") ? "[11, 5, 3, 7]" : "([11, 5, 3, 7], 3)"}
 							   value={this.state.testArgs} />
 
 					<textarea value={this.state.testOutput}
