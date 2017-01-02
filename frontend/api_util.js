@@ -1,7 +1,7 @@
 const APIUtil = {
   createAlgo: data => $.ajax({
     type: 'POST',
-    url: 'https://algo-racer.herokuapp.com/algorithms',
+    url: 'https://algorithm-racer.herokuapp.com/algorithms',
     dataType: 'jsonp',
     contentType: 'application/json',
     data: JSON.stringify(data)
@@ -9,7 +9,7 @@ const APIUtil = {
 
   fetchScores: (category, maxScore) => $.ajax({
     method: 'GET',
-    url: 'https://algo-racer.herokuapp.com/algorithms',
+    url: 'https://algorithm-racer.herokuapp.com/algorithms',
     dataType: 'json',
     data: {
       category: category,
