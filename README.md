@@ -1,24 +1,15 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+algorithmRacer_ is a quick and easy way to test out your sorting and searching algorithms in the browser.
 
-Things you may want to cover:
+aR_ will run your code against our test cases for each category and assign a score based on speed and character count ("code golf"). We currently only support javascript code, but are looking to support more languages in the future.
 
-* Ruby version
+Visit https://algo-racer.herokuapp.com/ for a demo!
 
-* System dependencies
+aR_ is built mostly on React, with a Rails backend. We evaluate code safely inside a node vm module for our user sandbox, and validate sort/search functionality before submitting algorithms to be scored.
 
-* Configuration
+Features under development:
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+  * Leveraging web workers for more comprehensive testing without affecting user experience.
+  * Expanding sandbox functionality to include "setup" code blocks
+  * Display pages and comments for high-scoring algorithms 
