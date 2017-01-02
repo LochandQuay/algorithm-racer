@@ -68,6 +68,10 @@
 .leaderboard-item-code {
   position: relative;
   display: none;
+  border: 1px solid $light-gray;
+  width: 80%;
+  margin: 0 auto;
+  font-family: monospace;
 }
 
 .visible {
