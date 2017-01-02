@@ -211,7 +211,7 @@ let Editor = React.createClass({
 
 	setSpeed (ajax) {
 		let func = safeEval(this.state.code);
-		let runs = 200;
+		let runs = 10000;
 		let start = window.performance.now();
 		for (var i = 0; i < runs; i++) {
 			if (this.state.category === "SORT") {
@@ -230,7 +230,7 @@ let Editor = React.createClass({
 
 	//Purely for testing at the moment, might not need in production code
 	testSpeed (func) {
-		let runs = 100;
+		let runs = 10000;
 		let start = performance.now();
 		for (var i = 0; i < runs; i++) {
 			if (this.state.category === "SORT") {
