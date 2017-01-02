@@ -1,5 +1,6 @@
 import React from 'react';
 import LeaderboardScore from './leaderboard_list_items';
+const APIUtil = require('../api_util');
 
 
 class Leaderboard extends React.Component {
@@ -15,14 +16,8 @@ class Leaderboard extends React.Component {
   }
 
 	fetchScores(category) {
-		$.ajax ({
-			method: 'GET',
-			url: 'http://localhost:3000/algorithms',
-			dataType: 'json',
-			data: {
-				category: category
-			}
-		}).then(scores => this.setScores(scores));
+		APIUtil.fetchScores(category)
+      .then(scores => this.setScores(scores));
 	}
 
 	handleAll() {
