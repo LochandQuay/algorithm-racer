@@ -6,5 +6,5 @@ import configureStore from './store';
 $(() => {
   const store = configureStore();
   const app = document.getElementById('app');
-  ReactDOM.render(<Root />, app);
+  ReactDOM.render(<Root store={store}/>, app);
 });

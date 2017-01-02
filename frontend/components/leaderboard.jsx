@@ -1,101 +1,104 @@
 import React from 'react';
 import LeaderboardScore from './leaderboard_list_items';
+const APIUtil = require('../api_util');
 
-const LeaderboardScores = [
-	{
-		type: "Sample",
-		username: "Boaty McBoatface",
-		speed: "42ms",
-		golf: "Par",
-		score: 9872
-	},
-	{
-		type: "Sample",
-		username: "Boaty McBoatface",
-		speed: "42ms",
-		golf: "Par",
-		score: 9879
-	},
-	{
-		type: "Sample",
-		username: "Boaty McBoatface",
-		speed: "42ms",
-		golf: "Par",
-		score: 9016
-	},
-	{
-		type: "Sample",
-		username: "Boaty McBoatface",
-		speed: "42ms",
-		golf: "Par",
-		score: 9000
-	}
-];
 
 class Leaderboard extends React.Component {
   constructor () {
     super();
-    this.state = { sortBy: '', scores: LeaderboardScores};
-		// this.fetchScores();
-		console.log(this.scores);
+    this.state = { sortBy: 'ALL', scores: [], maxScore: undefined};
 		this.fetchScores = this.fetchScores.bind(this);
-		this.fetchSortScores = this.fetchSortScores.bind(this);
-		this.fetchSearchScores = this.fetchSearchScores.bind(this);
+		this.handleAll = this.handleAll.bind(this);
+		this.handleSort = this.handleSort.bind(this);
+		this.handleSearch = this.handleSearch.bind(this);
+		this.handleScroll = this.handleScroll.bind(this);
+		this.fetchScores();
   }
 
-	fetchScores() {
-		$.ajax ({
-			method: 'GET',
-			url: 'http://localhost:3000/algorithms',
-			dataType: 'json'
-		}).then(scores => this.setScores(scores));
+	fetchScores(category) {
+		APIUtil.fetchScores(category)
+      .then(scores => this.setScores(scores));
 	}
 
-	fetchSortScores() {
-		$.ajax ({
-			method: 'GET',
-			url: 'http://localhost:3000/algorithms/sort',
-			dataType: 'json'
-		}).then(scores => this.setScores(scores));
+	handleAll() {
+    this.refs.infiniteScroll.removeAttribute('disabled');
+
+		this.setState({ sortBy: 'ALL' }, this.fetchScores);
 	}
 
-	fetchSearchScores() {
-		$.ajax ({
-			method: 'GET',
-			url: 'http://localhost:3000/algorithms/array_search',
-			dataType: 'json'
-		}).then(scores => this.setScores(scores));
+	handleSort() {
+    this.refs.infiniteScroll.removeAttribute('disabled');
+
+		this.setState(
+			{ sortBy: 'SORT' },
+			() => (this.fetchScores('SORT'))
+		);
+	}
+
+	handleSearch() {
+    this.refs.infiniteScroll.removeAttribute('disabled');
+
+		this.setState(
+			{ sortBy: 'ARRAY_SEARCH' },
+			() => (this.fetchScores('ARRAY_SEARCH'))
+		);
+	}
+
+	handleScroll(e) {
+    e.preventDefault();
+    APIUtil.fetchScores(this.state.sortBy, this.state.maxScore)
+      .then((scores) => {
+        if (scores.length < 5) {
+          this.refs.infiniteScroll.setAttribute('disabled', 'disabled');
+        } else if (scores !== []) {
+          return this.setState({
+            scores: this.state.scores.concat(scores),
+            maxScore: scores[scores.length-1].total_score
+          });
+        }
+      });
 	}
 
 	setScores(scores) {
-		this.setState({scores: scores});
+		this.setState({
+      scores: scores,
+      maxScore: scores[scores.length-1].total_score
+    });
 	}
 
   render() {
-    const leaderboardSortTitle = this.state.sortBy
-      .slice(0, 1)
-      .toUpperCase()
-      .concat(this.state.sortBy.slice(1));
+    const leaderboardSortTitle = () => {
+      if (this.state.sortBy === 'SORT') {
+        return "Sorting";
+      } else if (this.state.sortBy === 'ARRAY_SEARCH') {
+        return "Searching";
+      } else {
+        return "All Categories";
+      }
+    };
 
-    const leaderboardScores = this.state.scores.map( (score) => (
-      <LeaderboardScore type={score.type}
-                        score={score.score}
-                        username={score.username}
-                        speed={score.speed}
-                        golf={score.golf} />
+    const leaderboardScores = this.state.scores.map( (score, i) => (
+			<a href='#' key={i}>
+				<LeaderboardScore type={score.title}
+					score={score.total_score}
+					username={score.author}
+					speed={score.speed}
+					golf={score.golf_score} />
+			</a>
       )
     );
+
     return (
       <div>
-        <h2>{ leaderboardSortTitle }</h2>
+        <h2>{ leaderboardSortTitle() } Leaderboard</h2>
+
         <div className="group leader-nav">
         	<h4>Go to:</h4>
         	<ul className="leaderboard-dropdown">
         		<div className="leaderboard-dropdown-items">
-        			<li onClick={this.fetchSortScores}>Sorting</li>
-        			<li onClick={this.fetchSearchScores}>Searching</li>
-        			// <li>Other</li>
-        			<li onClick={this.fetchScores}>All</li>
+        			<li onClick={this.handleSort}>Sorting</li>
+        			<li onClick={this.handleSearch}>Searching</li>
+        			<li onClick={this.handleAll}>All</li>
         		</div>
         	</ul>
         </div>
@@ -103,6 +106,13 @@ class Leaderboard extends React.Component {
         <ol className="leaderboard-list">
           { leaderboardScores }
         </ol>
+
+				<button onClick={this.handleScroll}
+                className="infinite-scroll"
+                ref="infiniteScroll">
+          Load more scores
+        </button>
+
       </div>
     );
   }

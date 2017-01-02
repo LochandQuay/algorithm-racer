@@ -5,7 +5,7 @@ import Editor from './editor.jsx';
 
 const Root = ({ store }) => (
   <Provider store={store}>
-    <div> {/* change to store provider?? */}
+    <div>
       <Leaderboard />
       <Editor />
     </div>
