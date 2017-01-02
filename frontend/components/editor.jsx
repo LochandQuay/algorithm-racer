@@ -288,7 +288,7 @@ let Editor = React.createClass({
 		};
 
 		let placeholder = () => {
-			let text = (this.state.category === "SORT") ? "[11, 5, 3, 7]" : "([11, 5, 3, 7], 3)";
+			let text = (this.state.category === "SORT") ? "[11, 5, 3, 7]" : "[11, 5, 3, 7], 3";
 			return text + " // test arguments";
 		};
 
