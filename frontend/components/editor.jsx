@@ -237,8 +237,8 @@ let Editor = React.createClass({
 
 	runSearchTests (func) {
 		for (let test in tests.ARRAY_SEARCH) {
-			let array = test.slice(0);
-			func(array);
+			let args = tests.ARRAY_SEARCH[test];
+			func(args);
 		}
 	},
 
@@ -296,7 +296,7 @@ let Editor = React.createClass({
 				<div id="editor-testing">
 				  <input onChange={this.updateTestArgs}
 							   type='text'
-							 	 placeholder="Enter test arguments here"
+							 	 placeholder="[11, 5, 7, 1, 3]"
 							   value={this.state.testArgs} />
 
 					<textarea value={this.state.testOutput}
