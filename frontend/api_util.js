@@ -7,12 +7,13 @@ const APIUtil = {
     data: JSON.stringify(data)
   }),
 
-  fetchScores: category => $.ajax({
+  fetchScores: (category, maxScore) => $.ajax({
     method: 'GET',
     url: 'http://localhost:3000/algorithms',
     dataType: 'json',
     data: {
-      category: category
+      category: category,
+      max_score: maxScore
     }
   })
 };

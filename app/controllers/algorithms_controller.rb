@@ -34,7 +34,9 @@ class AlgorithmsController < ApplicationController
   end
 
   def index
-    @algorithms = Algorithm.top_algos_by_category(LIMIT, params[:category])
+    @algorithms = Algorithm.top_algos_by_category(
+      LIMIT, params[:category], params[:max_score]
+    )
 
     respond_to do |format|
       format.html { render :index }
