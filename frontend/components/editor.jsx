@@ -304,7 +304,7 @@ let Editor = React.createClass({
 					Total Score: {this.state.totalScore}
 				</div>
 
-				<Leaderboard />
+				<Leaderboard total={this.state.totalScore} />
 
 				<h2>Submit an Algorithm</h2>
 				<label>

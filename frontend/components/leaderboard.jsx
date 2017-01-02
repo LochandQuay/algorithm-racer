@@ -4,8 +4,8 @@ const APIUtil = require('../api_util');
 
 
 class Leaderboard extends React.Component {
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
     this.state = { sortBy: 'ALL', scores: [], maxScore: undefined};
 		this.fetchScores = this.fetchScores.bind(this);
 		this.handleAll = this.handleAll.bind(this);
@@ -14,6 +14,11 @@ class Leaderboard extends React.Component {
 		this.handleScroll = this.handleScroll.bind(this);
     this.showCode = this.showCode.bind(this);
 		this.fetchScores();
+  }
+
+
+  componentWillRecieveProps() {
+    this.fetchScores(this.state.sortBy);
   }
 
 	fetchScores(category) {
@@ -73,7 +78,7 @@ class Leaderboard extends React.Component {
     let $a = $(e.currentTarget);
     console.log($a.find('div.leaderboard-item-code'));
     $a.find('div.leaderboard-item-code').toggleClass('.visible');
-    
+
   }
 
   render() {
