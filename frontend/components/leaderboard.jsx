@@ -21,10 +21,14 @@ class Leaderboard extends React.Component {
 	}
 
 	handleAll() {
+    this.refs.infiniteScroll.removeAttribute('disabled');
+
 		this.setState({ sortBy: 'ALL' }, this.fetchScores);
 	}
 
 	handleSort() {
+    this.refs.infiniteScroll.removeAttribute('disabled');
+
 		this.setState(
 			{ sortBy: 'SORT' },
 			() => (this.fetchScores('SORT'))
@@ -32,20 +36,27 @@ class Leaderboard extends React.Component {
 	}
 
 	handleSearch() {
+    this.refs.infiniteScroll.removeAttribute('disabled');
+
 		this.setState(
 			{ sortBy: 'ARRAY_SEARCH' },
 			() => (this.fetchScores('ARRAY_SEARCH'))
 		);
 	}
 
-	handleScroll() {
+	handleScroll(e) {
+    e.preventDefault();
     APIUtil.fetchScores(this.state.sortBy, this.state.maxScore)
-      .then((scores) => (
-        this.setState({
-          scores: this.state.scores.concat(scores),
-          maxScore: scores[scores.length-1].total_score
-        })
-      ));
+      .then((scores) => {
+        if (scores.length < 5) {
+          this.refs.infiniteScroll.setAttribute('disabled', 'disabled');
+        } else if (scores !== []) {
+          return this.setState({
+            scores: this.state.scores.concat(scores),
+            maxScore: scores[scores.length-1].total_score
+          });
+        }
+      });
 	}
 
 	setScores(scores) {
@@ -60,7 +71,7 @@ class Leaderboard extends React.Component {
       if (this.state.sortBy === 'SORT') {
         return "Sorting";
       } else if (this.state.sortBy === 'ARRAY_SEARCH') {
-        return "Array Searching";
+        return "Searching";
       } else {
         return "All Categories";
       }
@@ -96,7 +107,11 @@ class Leaderboard extends React.Component {
           { leaderboardScores }
         </ol>
 
-				<a onClick={this.handleScroll} href="#">Load more scores</a>
+				<button onClick={this.handleScroll}
+                className="infinite-scroll"
+                ref="infiniteScroll">
+          Load more scores
+        </button>
 
       </div>
     );
